@@ -1,4 +1,4 @@
-# react-a2f6u2
+# Meal Finder React
 
 [Demo](https://react-a2f6u2.stackblitz.io)
 
