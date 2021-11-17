@@ -9,6 +9,7 @@ export default function App() {
 
   const fetchMoviesHandler = async () => {
     try {
+      console.log('fetch', searchMeal);
       const response = await fetch(
         'https://www.themealdb.com/api/json/v1/1/search.php?s=' + searchMeal
       );
@@ -35,8 +36,12 @@ export default function App() {
   const mealSearchSubmit = (event) => {
     event.preventDefault();
     console.log(event.target[0].value);
-    setSearchMeal(event.target[0].value);
-    fetchMoviesHandler();
+    setSearchMeal((previous) => event.target[0].value);
+    setTimeout(fetchMoviesHandler, 1000);
+  };
+
+  const mealsearchHandler = (e) => {
+    setSearchMeal(e.target.value);
   };
 
   useEffect(() => {
@@ -51,6 +56,8 @@ export default function App() {
           type="text"
           id="search"
           placeholder="Search for meals or keywords"
+          value={searchMeal}
+          onChange={mealsearchHandler}
         />
         <button className="search-btn" type="submit">
           <i class="fas fa-search"></i>
