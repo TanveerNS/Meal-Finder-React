@@ -5,7 +5,7 @@ export default function App() {
   const [meals, setMeals] = useState([]);
   const [searchMeal, setSearchMeal] = useState('pizza');
   const [error, setError] = useState(false);
-  let ingredients = [];
+  const ingredients = [];
 
   const fetchMoviesHandler = async () => {
     try {
@@ -48,6 +48,21 @@ export default function App() {
     fetchMoviesHandler();
   }, []);
 
+  const mealIngredients = (meal) => {
+    for (let i = 1; i <= 12; i++) {
+      console.log(meal['strIngredient' + i]);
+      if (meal['strIngredient' + i]) {
+        ingredients.push(
+          meal['strIngredient' + i] + '-' + meal['strMeasure' + i]
+        );
+      } else {
+        break;
+      }
+    }
+    console.log('ingredient', ingredients);
+    return ingredients.map((ing) => <li>{ing}</li>);
+  };
+
   return (
     <div className="container">
       <h1>Meal Finder</h1>
@@ -60,7 +75,7 @@ export default function App() {
           onChange={mealsearchHandler}
         />
         <button className="search-btn" type="submit">
-          <i class="fas fa-search"></i>
+          <i className="fas fa-search">&#128269;</i>
         </button>
       </form>
       {error && <p>There are no search results, Try again!</p>}
@@ -90,6 +105,8 @@ export default function App() {
               </div>
               <div className="main">
                 <p>{meal.strInstructions}</p>
+                <h2>Ingredients</h2>
+                <ul>{mealIngredients(meal)}</ul>
               </div>
             </div>
           </div>
